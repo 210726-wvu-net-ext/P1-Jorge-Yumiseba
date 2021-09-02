@@ -1,0 +1,146 @@
+﻿@model IEnumerable<Domain.Restaurant>
+
+@{
+    ViewData["Title"] = "List!";
+}
+<head>
+
+
+    <link href="~/css/style.css" rel="stylesheet" />
+    
+</head>
+
+<header id="header" class="fixed-top d-flex align-items-cente">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
+
+        <h1 class="logo me-auto me-lg-0"><a asp-controller="Home" asp-action="Index">Jorge Restaurant</a></h1>
+
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+        <nav id="navbar" class="navbar order-last order-lg-0">
+            <ul>
+                <li><a class="nav-link scrollto active" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a class="nav-link scrollto" asp-controller="Home" asp-action="Index">About</a></li>
+                <li><a class="nav-link scrollto" asp-controller="Home" asp-action="Index">Menu</a></li>
+                <li><a class="nav-link scrollto" asp-controller="Restaurant" asp-action="Index">Restaurants</a></li>
+                <li><a class="nav-link scrollto" asp-controller="User" asp-action="Index">Users</a></li>
+                <li><a class="nav-link scrollto" asp-controller="Home" asp-action="Index">Gallery</a></li>
+                @*<li class="dropdown">
+                        <a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a href="#">Drop Down 1</a></li>
+                            <li class="dropdown">
+                                <a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
+                                <ul>
+                                    <li><a href="#">Deep Drop Down 1</a></li>
+                                    <li><a href="#">Deep Drop Down 2</a></li>
+                                    <li><a href="#">Deep Drop Down 3</a></li>
+                                    <li><a href="#">Deep Drop Down 4</a></li>
+                                    <li><a href="#">Deep Drop Down 5</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Drop Down 2</a></li>
+                            <li><a href="#">Drop Down 3</a></li>
+                            <li><a href="#">Drop Down 4</a></li>
+                        </ul>
+                    </li>*@
+                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+    </div>
+</header><!-- End Header -->
+<pre>
+
+
+
+
+
+
+</pre>
+
+<div class="bodyres">
+    
+
+    <h1>Index</h1>
+    <p>Gotta catch them all</p>
+
+
+    <p>
+        <a asp-action="CreateRestaurant">Create New Restaurant</a>
+
+
+    </p>
+    <p>
+        <a class="text-center" asp-action="SearchRestaurant"> Search a Restaurant </a>
+    </p>
+
+
+    <table class="table">
+
+        <thead>
+            <tr>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.State)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ZipCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cuisine)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rating)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ZipCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cuisine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+     
+</div>
+
