@@ -21,12 +21,20 @@ namespace WebRestaurant.Controllers
 
             return View( _repo.ListUser());
         }
-        public IActionResult Detailss(string name)
+        public IActionResult Detailss(string name)   /*DetailsCreate*/
         {
 
             //get repo implementation to only get one note
             return View(_repo.ListUser().Last(x => x.Name == name));
             
+        }
+        public IActionResult DetailsEachUser(int id)
+        {
+
+            var x = _repo.ListUser().FirstOrDefault(x => x.Id == id);
+
+            return View(x);
+
         }
 
         [HttpGet]
@@ -48,6 +56,24 @@ namespace WebRestaurant.Controllers
 
             //return View("details",customer) // not refreshable
             return RedirectToAction("Detailss", new { name = customer.Name });
+
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var e = _repo.ListUser().FirstOrDefault(x => x.Id == id);
+
+            return View(e);
+
+        }
+        [HttpPost]
+        public IActionResult Delete(Customer user)
+        {
+
+            _repo.DeleteUser(user);
+
+            return View("DetailDelete"); ;
 
         }
     }

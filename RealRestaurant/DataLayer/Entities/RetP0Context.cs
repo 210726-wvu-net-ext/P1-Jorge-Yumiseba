@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -6,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DataLayer.Entities
 {
-    public partial class RetP0Context : DbContext
+    public partial class RetP0Context : DbContext 
     {
         public RetP0Context()
         {
@@ -17,13 +18,38 @@ namespace DataLayer.Entities
         {
         }
 
+        public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Information> Information { get; set; }
         public virtual DbSet<Restaurant> Restaurants { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
+        public virtual DbSet<Suggestion> Suggestions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+
+            modelBuilder.Entity<Comment>(entity =>
+            {
+                entity.ToTable("Comment");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Message)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Restaurant)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+            });
 
             modelBuilder.Entity<Customer>(entity =>
             {
@@ -38,6 +64,25 @@ namespace DataLayer.Entities
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Information>(entity =>
+            {
+                entity.Property(e => e.Email)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LastName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Password)
                     .HasMaxLength(100)
                     .IsUnicode(false);
             });
@@ -71,40 +116,44 @@ namespace DataLayer.Entities
 
             modelBuilder.Entity<Review>(entity =>
             {
-             
-
-
                 entity.ToTable("Review");
-                
+
                 entity.Property(e => e.Comments)
                     .HasMaxLength(100)
-                    
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Restaurant)
-                    
                     .WithMany(p => p.Reviews)
-                    
                     .HasForeignKey(d => d.RestaurantId)
-
-                    .OnDelete(DeleteBehavior.ClientCascade)
                     .HasConstraintName("FK__Review__Restaura__22751F6C");
 
                 entity.HasOne(d => d.User)
-
                     .WithMany(p => p.Reviews)
-                    
                     .HasForeignKey(d => d.UserId)
-                   .OnDelete(DeleteBehavior.ClientCascade)
-
                     .HasConstraintName("FK__Review__UserId__2180FB33");
-                    
+            });
+
+            modelBuilder.Entity<Suggestion>(entity =>
+            {
+                entity.Property(e => e.Email)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Message)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
             });
 
             OnModelCreatingPartial(modelBuilder);
-           
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
+
+
+    
 }

@@ -2,7 +2,6 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudio,visualstudiocode,csharp,dotnetcore
 
 appsettings.json
-wwwroot
 
 ### Csharp ###
 ## Ignore Visual Studio temporary files, build results, and

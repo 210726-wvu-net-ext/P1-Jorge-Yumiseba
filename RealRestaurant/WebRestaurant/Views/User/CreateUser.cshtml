@@ -4,6 +4,58 @@
     ViewData["Title"] = "CreateUser";
 }
 
+<head>
+    <link href="~/css/style.css" rel="stylesheet" />
+</head>
+<header id="header" class="fixed-top d-flex align-items-cente">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
+
+        <h1 class="logo me-auto me-lg-0"><a asp-controller="Home" asp-action="Index">Jorge Restaurant</a></h1>
+
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+        <nav id="navbar" class="navbar order-last order-lg-0">
+            <ul>
+                <li><a class="nav-link scrollto active" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a class="nav-link scrollto" asp-controller="Home" asp-action="Index">About</a></li>
+                <li><a class="nav-link scrollto" asp-controller="Home" asp-action="Index">Menu</a></li>
+                <li><a class="nav-link scrollto" asp-controller="Restaurant" asp-action="Index">Restaurants</a></li>
+                <li><a class="nav-link scrollto" asp-controller="User" asp-action="Index">Users</a></li>
+                <li><a class="nav-link scrollto" asp-controller="Home" asp-action="Index">Gallery</a></li>
+                @*<li class="dropdown">
+                        <a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a href="#">Drop Down 1</a></li>
+                            <li class="dropdown">
+                                <a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
+                                <ul>
+                                    <li><a href="#">Deep Drop Down 1</a></li>
+                                    <li><a href="#">Deep Drop Down 2</a></li>
+                                    <li><a href="#">Deep Drop Down 3</a></li>
+                                    <li><a href="#">Deep Drop Down 4</a></li>
+                                    <li><a href="#">Deep Drop Down 5</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Drop Down 2</a></li>
+                            <li><a href="#">Drop Down 3</a></li>
+                            <li><a href="#">Drop Down 4</a></li>
+                        </ul>
+                    </li>*@
+                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+    </div>
+</header><!-- End Header -->
+<pre>
+
+
+
+
+
+
+</pre>
 <h1>CreateUser</h1>
 
 <h4>Customer</h4>
@@ -12,25 +64,25 @@
     <div class="col-md-4">
         <form asp-action="CreateUser">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           
+
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" data-val="true" data-val-required="The Name field is required."/>
+                <input asp-for="Name" class="form-control" data-val="true" data-val-required="The Name field is required." />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" data-val="true" data-val-required="The LastName field is required."/>
+                <input asp-for="LastName" class="form-control" data-val="true" data-val-required="The LastName field is required." />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" data-val-number="Not a number pal!"/>
+                <input asp-for="Phone" class="form-control" data-val-number="Not a number pal!" />
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" data-val="true" data-val-required="The Email field is required."/>
+                <input asp-for="Email" class="form-control" data-val="true" data-val-required="The Email field is required." />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">

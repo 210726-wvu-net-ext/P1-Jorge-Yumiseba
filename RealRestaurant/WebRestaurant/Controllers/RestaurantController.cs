@@ -31,6 +31,14 @@ namespace WebRestaurant.Controllers
 
         }
 
+        //public IActionResult DetailsDelete(int id)
+        //{
+
+            
+        //    return View(_repo.GetRestaurants().Last(x => x.Id == id));
+
+        //}
+
         public IActionResult DetailsSearch(string name)
         {
 
@@ -71,10 +79,11 @@ namespace WebRestaurant.Controllers
 
               _repo.DeleteRestaurant(restaurant);
 
-            
-            return View("DetailsDelete", new { id = restaurant.Id });
+            return View("DetailsDelete");
 
         }
+
+
         [HttpGet]
         public IActionResult SearchRestaurant()
         {
