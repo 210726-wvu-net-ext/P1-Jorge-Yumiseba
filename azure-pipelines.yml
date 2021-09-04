@@ -17,7 +17,7 @@ pool:
   vmImage: windows-latest
 
 variables: 
-  slnPath: ..\..\..\RealRestaurant
+  slnPath: RealRestaurant
 
 stages: 
 - stage: build
