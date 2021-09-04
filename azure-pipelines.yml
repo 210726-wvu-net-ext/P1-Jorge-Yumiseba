@@ -17,7 +17,7 @@ pool:
   vmImage: windows-latest
 
 variables: 
-  solution: Project Code
+  solution: 'RealRestaurant/RealRestaurant.sln'
 
 stages: 
 - stage: build
