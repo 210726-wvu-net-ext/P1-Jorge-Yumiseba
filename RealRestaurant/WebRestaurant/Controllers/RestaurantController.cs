@@ -1,27 +1,52 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Diagnostics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using WebRestaurant.Models;
+using Microsoft.Extensions.Logging;
 
 namespace WebRestaurant.Controllers
 {
     public class RestaurantController : Controller
     {
-      
+        private readonly ILogger<RestaurantController> _logger;
         private readonly IDL _repo;
 
-        public RestaurantController( IDL repo)
+        public RestaurantController(ILogger<RestaurantController> logger, IDL repo)
         {
-         
+            _logger = logger;
             _repo = repo;
         }
+
+    
         public IActionResult Index()
         {
 
             return View(_repo.GetRestaurants());
         }
+
+        //[HttpGet("login")]
+        //public IActionResult Login()
+        //{
+          
+        //    return View();
+        //}
+
+        //[HttpPost("login")]
+        //public IActionResult Validate(string username, string password)
+        //{ 
+        //    if(username == "bob" && password == "pizza")
+        //    {
+        //        return Ok();
+        //    }
+        //    return BadRequest();
+        //}
+
 
         public IActionResult DetailsCreate(string name)
         {
@@ -50,7 +75,9 @@ namespace WebRestaurant.Controllers
             }
                 catch(Exception)
             {
+                _logger.LogError("Invalid Search was introduced");
                 return View("ErrorMessage", model: "There is not Restaurant with the parameters you specified!");
+                
             }
             
         }
@@ -77,7 +104,10 @@ namespace WebRestaurant.Controllers
         public IActionResult Delete(Restaurant restaurant)
         {
 
+
               _repo.DeleteRestaurant(restaurant);
+
+            _logger.LogInformation("Information has been deleted => RestaurantDatabase");
 
             return View("DetailsDelete");
 
@@ -125,5 +155,24 @@ namespace WebRestaurant.Controllers
             return RedirectToAction("DetailsCreate", new { name = restaurant.Name });
 
         }
+
+        [HttpGet]
+        public IActionResult CreatSuggestion()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateSuggestion(Suggestion suggestion)
+        {
+
+            _repo.AddSuggestion(suggestion);
+
+            return View("Index");
+
+        }
+
+
+
     }
 }

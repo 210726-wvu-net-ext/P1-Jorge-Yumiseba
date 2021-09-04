@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,12 @@ namespace WebRestaurant.Controllers
 {
     public class UserController : Controller
     {
+        private readonly ILogger<UserController> _logger;
         private readonly IDL _repo;
 
-        public UserController(IDL repo)
+        public UserController(ILogger<UserController> logger, IDL repo)
         {
-
+            _logger = logger;
             _repo = repo;
         }
         public IActionResult Index()
@@ -72,7 +74,7 @@ namespace WebRestaurant.Controllers
         {
 
             _repo.DeleteUser(user);
-
+            _logger.LogInformation("Information has been deleted => CustomerDatabase");
             return View("DetailDelete"); ;
 
         }

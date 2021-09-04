@@ -12,6 +12,8 @@ using Domain;
 using DataLayer;
 using DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
+using WebRestaurant.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace WebRestaurant
 {
@@ -27,6 +29,20 @@ namespace WebRestaurant
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+          
+            services.AddIdentity<WebUser, WebRole>(options =>
+             {
+                 options.User.RequireUniqueEmail = true;
+
+             }).AddEntityFrameworkStores<IdentityContext>();
+
+            services.AddDbContext<IdentityContext>(cfg =>
+           {
+               cfg.UseSqlServer(Configuration.GetConnectionString("retdb"));
+           });
+
+
             if (Configuration["OtherRepository"] == "true")
             {
                 //services.AddScoped<IRepository, NonEfRepository>();
@@ -36,20 +52,17 @@ namespace WebRestaurant
                 // "if a class asks for an IRepository, give it a Repository"
                 services.AddScoped<IDL, DL>();
             }
+
+
             services.AddDbContext<RetP0Context>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("retdb"));
-                options.LogTo(Console.WriteLine);
+         
             });
+
             services.AddControllersWithViews();
+
         }
-
-
-
-
-
-
-
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -70,6 +83,7 @@ namespace WebRestaurant
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

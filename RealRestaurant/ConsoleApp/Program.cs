@@ -41,6 +41,7 @@ namespace ConsoleApp
                 Console.WriteLine("[6] Delete a User");
                 Console.WriteLine("[7] Delete a review");
                 Console.WriteLine("[8] Delete a restaurant");
+                Console.WriteLine("[9] Add a Suggestion");
                 Console.WriteLine("[0] Exit");
 
                 switch (Console.ReadLine())
@@ -89,6 +90,11 @@ namespace ConsoleApp
                     case "8":
 
                         DeleteRestaurant(repo);
+
+                        break;
+                    case "9":
+
+                        AddSuggestion(repo);
 
                         break;
 
@@ -303,6 +309,26 @@ namespace ConsoleApp
 
             restaurant = repo.AddRestaurant(restaurant);
             Console.WriteLine("Restaurant has been added to the Data Base!");
+
+        }
+
+        private static void AddSuggestion(IDL repo)
+        {
+
+
+            Console.WriteLine("Enter your name");
+            string a = Console.ReadLine();
+            Console.WriteLine("Enter your email address");
+            string b = Console.ReadLine();
+    
+            Console.WriteLine("Enter the message");
+            string c = Console.ReadLine();
+           
+
+            Domain.Suggestion sug = new Domain.Suggestion(a, b, c);
+
+            sug = repo.AddSuggestion(sug);
+            Console.WriteLine("You have entered a new suggestion");
 
         }
         private static void SearchRestaurant(IDL repo)

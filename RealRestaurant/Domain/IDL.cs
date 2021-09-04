@@ -17,5 +17,6 @@ namespace Domain
         Restaurant SearchRestaurant(string x);
 
         Restaurant AddRestaurant(Restaurant a);
+        Suggestion AddSuggestion(Suggestion x);
     }
 }

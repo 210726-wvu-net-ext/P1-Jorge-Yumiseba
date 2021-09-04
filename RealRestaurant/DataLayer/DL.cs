@@ -118,6 +118,21 @@ namespace DataLayer
             _context.SaveChanges();
             return a;
         }
+        public Domain.Suggestion AddSuggestion(Domain.Suggestion x)
+        {
+            _context.Suggestions.Add(
+               new Entities.Suggestion
+               {
+              
+                  Name = x.Name,
+                  Email = x.Email,
+                  Message = x.Message
+               }
+            );
+            _context.SaveChanges();
+            return x;
+        }
+
         public Domain.Restaurant DeleteRestaurant(Domain.Restaurant x)
         {
             Entities.Restaurant resdel = new Entities.Restaurant
