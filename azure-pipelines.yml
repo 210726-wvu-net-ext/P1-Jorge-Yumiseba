@@ -16,7 +16,7 @@ pr:
 pool:
   vmImage: ubuntu-latest
 
-variables: 
+variables: "RealRestaurant/RealRestaurant.sln'
   solution: Project Code
 
 stages: 
