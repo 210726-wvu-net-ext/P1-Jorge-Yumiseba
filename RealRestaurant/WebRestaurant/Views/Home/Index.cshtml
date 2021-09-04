@@ -393,12 +393,13 @@
                     <div class="col-lg-8 mt-5 mt-lg-0">
 
                  
-                        @*<form asp-action="CreateSuggestion">*@
+                        <form asp-controller="Restaurant" asp-action="CreateSuggestion">
 
                             <div action="forms/contact.php" method="post" role="form" class="php-email-form">
                                 <div class="row">
 
                                     <div class="col-md-6 form-group">
+                                        
                                         <input asp-for="Name" type="text" class="form-control" id="name" placeholder="Your Name" required>
 
                                     </div>
@@ -418,7 +419,7 @@
                                 </div>
                                 <div class="text-center"><button type="submit">Send Message</button></div>
                             </div>
-                        @*</form>*@
+                        </form>
 
                     </div>
 

@@ -23,7 +23,7 @@ namespace WebRestaurant.Controllers
             _repo = repo;
         }
 
-    
+
         public IActionResult Index()
         {
 
@@ -33,7 +33,7 @@ namespace WebRestaurant.Controllers
         //[HttpGet("login")]
         //public IActionResult Login()
         //{
-          
+
         //    return View();
         //}
 
@@ -59,7 +59,7 @@ namespace WebRestaurant.Controllers
         //public IActionResult DetailsDelete(int id)
         //{
 
-            
+
         //    return View(_repo.GetRestaurants().Last(x => x.Id == id));
 
         //}
@@ -68,28 +68,28 @@ namespace WebRestaurant.Controllers
         {
 
             //get repo implementation to only get one note
-           
+
             try
             {
                 return View(_repo.GetRestaurants().First(x => x.Name.Contains(name)));
             }
-                catch(Exception)
+            catch (Exception)
             {
                 _logger.LogError("Invalid Search was introduced");
                 return View("ErrorMessage", model: "There is not Restaurant with the parameters you specified!");
-                
+
             }
-            
+
         }
 
-      
+
         public IActionResult Details(int id)
         {
 
-            var res = _repo.GetRestaurants().FirstOrDefault(x => x.Id  == id);
-          
+            var res = _repo.GetRestaurants().FirstOrDefault(x => x.Id == id);
+
             return View(res);
-    
+
         }
 
         [HttpGet]
@@ -105,7 +105,7 @@ namespace WebRestaurant.Controllers
         {
 
 
-              _repo.DeleteRestaurant(restaurant);
+            _repo.DeleteRestaurant(restaurant);
 
             _logger.LogInformation("Information has been deleted => RestaurantDatabase");
 
@@ -122,16 +122,16 @@ namespace WebRestaurant.Controllers
         }
         [HttpPost]
         public IActionResult SearchRestaurant(string SearchRes)
-       {
+        {
 
-            if(SearchRes == null)
+            if (SearchRes == null)
             {
                 return View("ErrorMessage", model: "Please insert something");
             }
-         
-             _repo.SearchRestaurant(SearchRes);
 
-            return RedirectToAction("DetailsSearch", new { name = SearchRes});
+            _repo.SearchRestaurant(SearchRes);
+
+            return RedirectToAction("DetailsSearch", new { name = SearchRes });
         }
 
         [HttpGet]
@@ -141,6 +141,7 @@ namespace WebRestaurant.Controllers
 
         }
         [HttpPost] //form submission
+        [ValidateAntiForgeryToken]
         public IActionResult CreateRestaurant(Restaurant restaurant)
         {
             //ASP.NET "model binding"
@@ -156,22 +157,23 @@ namespace WebRestaurant.Controllers
 
         }
 
-        [HttpGet]
-        public IActionResult CreatSuggestion()
-        {
-            return View();
-        }
+        //[HttpGet]
+        //public IActionResult CreateSuggestion()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public IActionResult CreateSuggestion(Suggestion suggestion)
-        {
+        //[HttpPost]
+        //public IActionResult CreateSuggestion(string Name, string Email, string Message)
+        //{
 
-            _repo.AddSuggestion(suggestion);
+        //    //_repo.AddSuggestion();
 
-            return View("Index");
+        //    return View("Index");
 
-        }
+        //}
 
+    
 
 
     }
