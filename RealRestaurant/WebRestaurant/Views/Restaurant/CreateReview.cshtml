@@ -1,5 +1,17 @@
-﻿@model string
-<link href="~/css/style.css" rel="stylesheet" />
+﻿@model Domain.ReviewSecond
+
+
+@{
+    ViewData["Title"] = "CreateReview";
+
+
+}
+
+<link href="~/css/StyleRestaurant.css" rel="stylesheet" />
+
+<head>
+    <link href="~/css/style.css" rel="stylesheet" />
+</head>
 <header id="header" class="fixed-top d-flex align-items-cente">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
 
@@ -12,9 +24,9 @@
             <ul>
                 <li><a class="nav-link scrollto active" asp-controller="Home" asp-action="Index">Home</a></li>
                 <li><a class="nav-link scrollto" asp-controller="Home" asp-action="Index">About</a></li>
-                <li><a class="nav-link scrollto" asp-controller="Home" asp-action="Index">Menu</a></li>
+               
                 <li><a class="nav-link scrollto" asp-controller="Restaurant" asp-action="Index">Restaurants</a></li>
-                <li><a class="nav-link scrollto" asp-controller="User" asp-action="Index">Users</a></li>
+                <li><a class="nav-link scrollto" asp-controller="UserInfo" asp-action="Index">Users</a></li>
                 <li><a class="nav-link scrollto" asp-controller="Home" asp-action="Index">Gallery</a></li>
                 @*<li class="dropdown">
                         <a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
@@ -41,7 +53,6 @@
         </nav><!-- .navbar -->
     </div>
 </header><!-- End Header -->
-
 <pre>
 
 
@@ -50,6 +61,64 @@
 
 
 </pre>
+<h1>Make a new Review!</h1>
 
-<p class="text-center">An Error Ocurred</>
-<p class="text-center">@Model</p>
+<h4>Fill the following information/</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateReview">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comment" class="control-label"></label>
+                <input asp-for="Comment" class="form-control" />
+                <span asp-validation-for="Comment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rating" class="control-label"></label>
+                <input asp-for="Rating" class="form-control" />
+                <span asp-validation-for="Rating" class="text-danger"></span>
+            </div>
+
+
+
+
+            <div class="form-group">
+
+                <label class="control-label"> Restaurant Id</label>
+
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => Model.RestaurantId, ViewBag.ResList as SelectList, "---Select Restaurant---", new { @class = "form-control" })
+
+                </div>
+
+                @*<input class="form-control"  data-val="true" data-val-required="The RestaurantId field is required." id="RestaurantId" name="RestaurantId"   value="">*@
+
+
+
+
+                <span asp-validation-for="RestaurantId" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

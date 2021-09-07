@@ -2,8 +2,14 @@
 
 @{
     ViewData["Title"] = "Details";
+   
+
 }
-<link href="~/css/style.css" rel="stylesheet" />
+<link href="~/css/StyleRestaurant.css" rel="stylesheet" />
+
+<head>
+    <link href="~/css/style.css" rel="stylesheet" />
+</head>
 <header id="header" class="fixed-top d-flex align-items-cente">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
 
@@ -16,9 +22,9 @@
             <ul>
                 <li><a class="nav-link scrollto active" asp-controller="Home" asp-action="Index">Home</a></li>
                 <li><a class="nav-link scrollto" asp-controller="Home" asp-action="Index">About</a></li>
-                <li><a class="nav-link scrollto" asp-controller="Home" asp-action="Index">Menu</a></li>
+              
                 <li><a class="nav-link scrollto" asp-controller="Restaurant" asp-action="Index">Restaurants</a></li>
-                <li><a class="nav-link scrollto" asp-controller="User" asp-action="Index">Users</a></li>
+                <li><a class="nav-link scrollto" asp-controller="UserInfo" asp-action="Index">Users</a></li>
                 <li><a class="nav-link scrollto" asp-controller="Home" asp-action="Index">Gallery</a></li>
                 @*<li class="dropdown">
                         <a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
@@ -45,7 +51,6 @@
         </nav><!-- .navbar -->
     </div>
 </header><!-- End Header -->
-
 <pre>
 
 
@@ -57,7 +62,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Restaurant</h4>
+    <h3>Restaurant</h3>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -111,6 +116,48 @@
     </dl>
 </div>
 <div>
-   
+
+    <h3>Reviews</h3>
+    <p></p>
+
+@foreach (var x in Model.Reviewseconds)
+{
+<dl class="row">
+
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => x.Name)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => x.Name)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => x.Comment)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => x.Comment)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => x.Rating)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => x.Rating)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => x.RestaurantId)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => x.RestaurantId)
+    </dd>
+    <dt class="col-sm-2">
+        
+    </dt>
+    <dd class="col-sm-10">
+       
+    </dd>
+
+</dl>
+}
+
+
     <a asp-action="Index">Back to List</a>
 </div>

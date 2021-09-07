@@ -42,6 +42,9 @@ namespace ConsoleApp
                 Console.WriteLine("[7] Delete a review");
                 Console.WriteLine("[8] Delete a restaurant");
                 Console.WriteLine("[9] Add a Suggestion");
+                Console.WriteLine("[10] List Suggestions");
+                Console.WriteLine("[11] Add Review");
+                Console.WriteLine("[12] Delete a reviewsecond");
                 Console.WriteLine("[0] Exit");
 
                 switch (Console.ReadLine())
@@ -92,11 +95,30 @@ namespace ConsoleApp
                         DeleteRestaurant(repo);
 
                         break;
+                       
                     case "9":
 
                         AddSuggestion(repo);
 
                         break;
+                    case "10":
+
+                        ListSuggestion(repo);
+
+                        break;
+
+                    case "11":
+
+                        AddReviewSecond(repo);
+
+                        break;
+
+                    case "12":
+
+                        DeleteReviewSecond(repo);
+
+                        break;
+
 
                     case "99":
                         Console.WriteLine("You have entered into the secret Administrator path...Enter password:");
@@ -180,6 +202,25 @@ namespace ConsoleApp
             }
 
         }
+        private static void ListSuggestion(IDL x)
+        {
+            List<Domain.Suggestion> notes = x.ListSuggestion();
+
+            Console.WriteLine();
+
+            if (notes.Count == 0)
+            {
+                Console.WriteLine("none");
+            }
+            else
+            {
+                foreach (var note in notes)
+                {
+                    Console.WriteLine("Name: " + note.Name);
+                }
+            }
+
+        }
         private static void ListUser(IDL x)
         {
             List<Domain.Customer> users = x.ListUser();
@@ -238,6 +279,20 @@ namespace ConsoleApp
             Domain.Review customer = new Domain.Review(k);
 
             customer = repo.DeleteReview(customer);
+            Console.WriteLine("Review has been deleted");
+
+        }
+        private static void DeleteReviewSecond(IDL repo)
+        {
+
+            
+            Console.WriteLine("Enter the Id");
+            int a = Convert.ToInt32( Console.ReadLine());
+           
+
+            Domain.ReviewSecond customer = new Domain.ReviewSecond(a);
+
+            customer = repo.DeleteReviewSecond(customer);
             Console.WriteLine("Review has been deleted");
 
         }
@@ -320,10 +375,10 @@ namespace ConsoleApp
             string a = Console.ReadLine();
             Console.WriteLine("Enter your email address");
             string b = Console.ReadLine();
-    
+
             Console.WriteLine("Enter the message");
             string c = Console.ReadLine();
-           
+
 
             Domain.Suggestion sug = new Domain.Suggestion(a, b, c);
 
@@ -331,6 +386,32 @@ namespace ConsoleApp
             Console.WriteLine("You have entered a new suggestion");
 
         }
+
+        private static void AddReviewSecond(IDL repo)
+        {
+
+
+            Console.WriteLine("Enter your name");
+            string a = Console.ReadLine();
+            Console.WriteLine("Enter your comment");
+            string b = Console.ReadLine();
+
+            Console.WriteLine("Enter your rating");
+
+            decimal c = Convert.ToDecimal(Console.ReadLine());
+
+            Console.WriteLine("Enter your restaurantid");
+            int d = Convert.ToInt32(Console.ReadLine());
+
+
+            Domain.ReviewSecond sug = new Domain.ReviewSecond(a, b, c,d);
+
+            sug = repo.AddReviewSecond(sug);
+
+            Console.WriteLine("You have entered a new Review");
+
+        }
+
         private static void SearchRestaurant(IDL repo)
         {
             Console.WriteLine("Enter the restaurant you want to search: ");

@@ -6,9 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+
 using System.Threading.Tasks;
 using WebRestaurant.Models;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebRestaurant.Controllers
 {
@@ -23,29 +25,45 @@ namespace WebRestaurant.Controllers
             _repo = repo;
         }
 
-
         public IActionResult Index()
         {
+            var x = _repo.GetRestaurants();
 
-            return View(_repo.GetRestaurants());
+           
+
+            return View(x);
         }
 
-        //[HttpGet("login")]
-        //public IActionResult Login()
-        //{
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
 
-        //    return View();
-        //}
+        }
 
-        //[HttpPost("login")]
-        //public IActionResult Validate(string username, string password)
-        //{ 
-        //    if(username == "bob" && password == "pizza")
-        //    {
-        //        return Ok();
-        //    }
-        //    return BadRequest();
-        //}
+        [HttpPost] 
+     
+        public IActionResult Register(UserInformation customer)
+        {
+
+            var x = _repo.AddUserInfo(customer);
+
+
+            var y = _repo.GetUsers().Find(t => t.Username == customer.Username);
+
+
+            if (x.Username != y.Username)
+            {
+                return RedirectToAction(nameof(DetailsRegistration));
+            }
+            
+            else 
+                {
+                return View("ErrorMessage", "The username is taken");
+
+            }
+
+        }
 
 
         public IActionResult DetailsCreate(string name)
@@ -55,14 +73,26 @@ namespace WebRestaurant.Controllers
             return View(_repo.GetRestaurants().Last(x => x.Name == name));
 
         }
+        public IActionResult DetailsDelete()
+        {
 
-        //public IActionResult DetailsDelete(int id)
-        //{
+
+            return View();
+
+        }
+        public IActionResult DetailsReview()
+        {
 
 
-        //    return View(_repo.GetRestaurants().Last(x => x.Id == id));
+            return View();
 
-        //}
+        }
+
+        public IActionResult DetailsRegistration()
+        {
+             return View();
+
+        }
 
         public IActionResult DetailsSearch(string name)
         {
@@ -86,12 +116,15 @@ namespace WebRestaurant.Controllers
         public IActionResult Details(int id)
         {
 
-            var res = _repo.GetRestaurants().FirstOrDefault(x => x.Id == id);
+            Restaurant res = _repo.GetRestaurants().FirstOrDefault(x => x.Id == id);
+
+            res.Reviewseconds = _repo.GetReviews().FindAll(x => x.RestaurantId == id);
 
             return View(res);
 
         }
 
+        [Authorize(Roles ="Admin")]
         [HttpGet]
         public IActionResult Delete(int id)
         {
@@ -104,12 +137,18 @@ namespace WebRestaurant.Controllers
         public IActionResult Delete(Restaurant restaurant)
         {
 
+            try
+            {
+                _repo.DeleteRestaurant(restaurant);
 
-            _repo.DeleteRestaurant(restaurant);
+                _logger.LogInformation("Information has been deleted => RestaurantDatabase");
 
-            _logger.LogInformation("Information has been deleted => RestaurantDatabase");
-
-            return View("DetailsDelete");
+                return RedirectToAction(nameof(DetailsDelete));
+            }
+            catch
+            {
+                return View(nameof(Index));
+            }
 
         }
 
@@ -134,46 +173,50 @@ namespace WebRestaurant.Controllers
             return RedirectToAction("DetailsSearch", new { name = SearchRes });
         }
 
-        [HttpGet]
+
+
+        [Authorize(Roles = "Admin")]
+        
         public IActionResult CreateRestaurant()
         {
             return View();
 
         }
         [HttpPost] //form submission
-        [ValidateAntiForgeryToken]
+       
         public IActionResult CreateRestaurant(Restaurant restaurant)
         {
-            //ASP.NET "model binding"
-            //-fill in action method parameters with data from the request
-            // (ULR  path, URL query string, form data, etc - autimatically
-            //based on compatible data type and name
-            // _repo = AddUser(customer);
+
 
             _repo.AddRestaurant(restaurant);
-
-            //return View("details",customer) // not refreshable
             return RedirectToAction("DetailsCreate", new { name = restaurant.Name });
 
         }
 
-        //[HttpGet]
-        //public IActionResult CreateSuggestion()
-        //{
-        //    return View();
-        //}
+        [Authorize]
+        [HttpGet]
+        public IActionResult CreateReview()
+        {
+            var x = _repo.GetRestaurants();
 
-        //[HttpPost]
-        //public IActionResult CreateSuggestion(string Name, string Email, string Message)
-        //{
+            ViewBag.ResList = new SelectList(x, "Id", "Name");
+            return View();
 
-        //    //_repo.AddSuggestion();
+        }
 
-        //    return View("Index");
+        [HttpPost] //form submission
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateReview( ReviewSecond x)
+        {
+            
+            _repo.AddReviewSecond(x);
 
-        //}
+            //return View("details",customer) // not refreshable
+            return RedirectToAction(nameof(DetailsReview));
 
-    
+        }
+
+
 
 
     }

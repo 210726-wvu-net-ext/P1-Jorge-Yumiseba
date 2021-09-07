@@ -34,6 +34,39 @@ namespace DataLayer
                 })
                 .ToList();
         }
+        public List<Domain.UserInformation> GetUsers ()
+        {
+            return _context.UserInformations
+
+                .Select(n => new Domain.UserInformation
+                {
+                    Id = n.Id,
+                    Name = n.Name,
+                    LastName = n.LastName,
+                    Email = n.Email,
+                    Username = n.Username,
+                    Password = n.Password,
+                  
+                })
+                .ToList();
+        }
+        public List<Domain.ReviewSecond> GetReviews()
+        {
+            return _context.ReviewSeconds
+
+                .Select(n => new Domain.ReviewSecond
+                {
+                    Id = n.Id,
+                    Name = n.Name,
+                    Comment = n.Comment,
+                    Rating = n.Rating,
+                    RestaurantId = n.RestaurantId,
+                 
+
+                })
+                .ToList();
+        }
+
         public List<Domain.Customer> ListUser()
         {
             return _context.Customers
@@ -45,6 +78,20 @@ namespace DataLayer
                     LastName = n.LastName,
                     Phone = n.Phone,
                     Email =  n.Email
+                })
+                .ToList();
+        }
+        public List<Domain.Suggestion> ListSuggestion()
+        {
+            return _context.Suggestions
+
+                .Select(n => new Domain.Suggestion
+                {
+                    Id = n.Id,
+                    Name = n.Name,
+                    Email = n.Email,
+                    Message = n.Message
+
                 })
                 .ToList();
         }
@@ -60,6 +107,46 @@ namespace DataLayer
                     Phone = x.Phone,
                     Email = x.Email
 
+                }
+
+
+            );
+            _context.SaveChanges();
+            return x;
+        }
+        public Domain.UserInformation AddUserInfo(Domain.UserInformation n)
+        {
+
+            _context.UserInformations.Add(
+                new Entities.UserInformation
+                {
+                    Id = n.Id,
+                    Name = n.Name,
+                    LastName = n.LastName,
+                    Email = n.Email,
+                    Username = n.Username,
+                    Password = n.Password,
+
+                }
+
+
+            );
+            _context.SaveChanges();
+            return n;
+        }
+
+        public Domain.ReviewSecond AddReviewSecond(Domain.ReviewSecond x)
+        {
+
+            _context.ReviewSeconds.Add(
+                new Entities.ReviewSecond
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Comment = x.Comment,
+                    Rating = x.Rating,
+                    RestaurantId = x.RestaurantId
+                 
                 }
 
 
@@ -83,6 +170,22 @@ namespace DataLayer
             _context.SaveChanges();
             return x;
         }
+        public Domain.UserInformation DeleteUserInfo(Domain.UserInformation n)
+        {
+            _context.UserInformations.Remove(
+                new Entities.UserInformation
+                {
+                    Id = n.Id,
+                    Name = n.Name,
+                    LastName = n.LastName,
+                    Email = n.Email,
+                    Username = n.Username,
+                    Password = n.Password,
+                });
+            _context.SaveChanges();
+            return n;
+        }
+
         public Domain.Review DeleteReview(Domain.Review x)
         {
             _context.Reviews.Remove(
@@ -123,10 +226,10 @@ namespace DataLayer
             _context.Suggestions.Add(
                new Entities.Suggestion
                {
-              
-                  Name = x.Name,
-                  Email = x.Email,
-                  Message = x.Message
+                   Id = x.Id,
+                   Name = x.Name,
+                   Email = x.Email,
+                   Message = x.Message
                }
             );
             _context.SaveChanges();
@@ -151,6 +254,23 @@ namespace DataLayer
             return x;
            
         }
+        public Domain.ReviewSecond DeleteReviewSecond(Domain.ReviewSecond x)
+        {
+            Entities.ReviewSecond resdel = new Entities.ReviewSecond
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Comment = x.Comment,
+                Rating = x.Rating,
+                RestaurantId = x.RestaurantId,
+                
+            };
+            _context.ReviewSeconds.Remove(resdel);
+            _context.SaveChanges();
+            return x;
+
+        }
+
 
 
 

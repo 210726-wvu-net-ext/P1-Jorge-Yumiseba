@@ -8,7 +8,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebRestaurant.Models;
 using Domain;
-
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebRestaurant.Controllers
 {
@@ -29,13 +32,70 @@ namespace WebRestaurant.Controllers
  
             return View();
         }
-       
-       
 
-        public IActionResult Privacy()
+
+
+        [HttpGet("denied")]
+        public IActionResult Denied()
+        {
+
+            return View();
+
+        }
+
+      [Authorize]
+        public IActionResult Security()
         {
             return View();
         }
+
+
+        [HttpGet("login")]
+        public IActionResult Login(string returnUrl)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Validate(string username, string password, string returnUrl)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+
+            var user = _repo.GetUsers().Find(c => c.Username == username && c.Password == password);
+
+            if (!(user is null))
+            {
+                var claims = new List<Claim>();
+                claims.Add(new Claim("username", username));
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, username));
+                claims.Add(new Claim(ClaimTypes.Name, username));
+                
+
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                await HttpContext.SignInAsync(claimsPrincipal);
+
+                return Redirect(returnUrl);
+
+            }
+            TempData["Error"] = "Error. something went wrong";
+            return View("login");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return Redirect("/");
+
+        }
+
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

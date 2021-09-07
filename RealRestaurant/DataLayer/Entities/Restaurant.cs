@@ -9,6 +9,7 @@ namespace DataLayer.Entities
     {
         public Restaurant()
         {
+            ReviewSeconds = new HashSet<ReviewSecond>();
             Reviews = new HashSet<Review>();
         }
 
@@ -21,6 +22,7 @@ namespace DataLayer.Entities
         public string Cuisine { get; set; }
         public decimal Rating { get; set; }
 
+        public virtual ICollection<ReviewSecond> ReviewSeconds { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -8,31 +9,32 @@ using System.Threading.Tasks;
 
 namespace WebRestaurant.Controllers
 {
-    public class UserController : Controller
+    public class UserInfoController : Controller
     {
-        private readonly ILogger<UserController> _logger;
+        private readonly ILogger<UserInfoController> _logger;
         private readonly IDL _repo;
 
-        public UserController(ILogger<UserController> logger, IDL repo)
+        public UserInfoController(ILogger<UserInfoController> logger, IDL repo)
         {
             _logger = logger;
             _repo = repo;
         }
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
 
-            return View( _repo.ListUser());
+            return View(_repo.GetUsers());
         }
-        public IActionResult Detailss(string name)   /*DetailsCreate*/
+        public IActionResult Detailss(string name)   
         {
 
             //get repo implementation to only get one note
-            return View(_repo.ListUser().Last(x => x.Name == name));
-            
+            return View(_repo.GetUsers().Last(x => x.Name == name));
+
         }
         public IActionResult DetailDelete()
         {
-
 
             return View();
 
@@ -40,7 +42,7 @@ namespace WebRestaurant.Controllers
         public IActionResult DetailsEachUser(int id)
         {
 
-            var x = _repo.ListUser().FirstOrDefault(x => x.Id == id);
+            var x = _repo.GetUsers().FirstOrDefault(x => x.Id == id);
 
             return View(x);
 
@@ -53,17 +55,13 @@ namespace WebRestaurant.Controllers
 
         }
         [HttpPost] //form submission
-        public IActionResult CreateUser(Customer customer)
+        public IActionResult CreateUser(UserInformation customer)
         {
-            //ASP.NET "model binding"
-            //-fill in action method parameters with data from the request
-            // (ULR  path, URL query string, form data, etc - autimatically
-            //based on compatible data type and name
-            // _repo = AddUser(customer);
+          
 
-            _repo.AddUser(customer);
+            _repo.AddUserInfo(customer);
 
-            //return View("details",customer) // not refreshable
+          
             return RedirectToAction("Detailss", new { name = customer.Name });
 
         }
@@ -71,19 +69,20 @@ namespace WebRestaurant.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var e = _repo.ListUser().FirstOrDefault(x => x.Id == id);
+            var e = _repo.GetUsers().FirstOrDefault(x => x.Id == id);
 
             return View(e);
 
         }
         [HttpPost]
-        public IActionResult Delete(Customer user)
+        public IActionResult Delete(UserInformation user)
         {
 
-            _repo.DeleteUser(user);
+            _repo.DeleteUserInfo(user);
             _logger.LogInformation("Information has been deleted => CustomerDatabase");
-            return RedirectToAction(nameof(DetailDelete)); 
+            return RedirectToAction(nameof(DetailDelete));
 
         }
     }
 }
+

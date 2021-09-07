@@ -1,5 +1,11 @@
-﻿@model string
-<link href="~/css/style.css" rel="stylesheet" />
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<link href="~/css/StyleRestaurant.css" rel="stylesheet" />
+
+<head>
+    <link href="~/css/style.css" rel="stylesheet" />
+</head>
 <header id="header" class="fixed-top d-flex align-items-cente">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
 
@@ -14,7 +20,7 @@
                 <li><a class="nav-link scrollto" asp-controller="Home" asp-action="Index">About</a></li>
                 <li><a class="nav-link scrollto" asp-controller="Home" asp-action="Index">Menu</a></li>
                 <li><a class="nav-link scrollto" asp-controller="Restaurant" asp-action="Index">Restaurants</a></li>
-                <li><a class="nav-link scrollto" asp-controller="User" asp-action="Index">Users</a></li>
+                <li><a class="nav-link scrollto" asp-controller="UserInfo" asp-action="Index">Users</a></li>
                 <li><a class="nav-link scrollto" asp-controller="Home" asp-action="Index">Gallery</a></li>
                 @*<li class="dropdown">
                         <a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
@@ -41,7 +47,6 @@
         </nav><!-- .navbar -->
     </div>
 </header><!-- End Header -->
-
 <pre>
 
 
@@ -51,5 +56,11 @@
 
 </pre>
 
-<p class="text-center">An Error Ocurred</>
-<p class="text-center">@Model</p>
+@if (User.Identity.Name == "jyalarcon1997")
+{
+    <h2 class="text-center"> Welcome Back My Lord</h2>
+}
+else
+{
+    <h2 class="text-center"> Welcome @User.Identity.Name</h2>
+}

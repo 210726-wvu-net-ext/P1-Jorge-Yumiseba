@@ -17,6 +17,7 @@ namespace Domain
         public string Cuisine { get; set; }
         public decimal Rating { get; set; }
         public List<Review> Reviews { get; set; }
+        public List<ReviewSecond> Reviewseconds { get; set; }
         public Restaurant()
         {
 
