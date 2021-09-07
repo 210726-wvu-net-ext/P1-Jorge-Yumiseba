@@ -6,10 +6,8 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
-variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+variables: #Path to folder with .sln
+  solution: Real Restaurant
 
 stages: 
 - stage: build
