@@ -6,7 +6,7 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
-variables: #Path to folder with .sln
+variables: 
   solution: RealRestaurant
 
 stages: 
