@@ -1,5 +1,5 @@
 trigger:
-- main
+- master
 
 pool:
   vmImage: 'windows-latest'
@@ -17,7 +17,7 @@ steps:
     restoreSolution: '$(solution)'
 
 - task: SonarCloudPrepare@1
-  displayName: 'Prepare analysis configuration'
+  displayName: 'Prepare Analysis'
   inputs:
     SonarCloud: 'jyalarcon1997'
     organization: '210726-wvu-net-ext'
