@@ -1,13 +1,19 @@
 
-
 trigger:
   branches:
     include:
     - master
+
+pr:
+  branches:
+    include:
+    - master
+
 pool:
-  vmImage: 'windows-latest'
+  vmImage: ubuntu-latest
 
-
+variables: 
+  solution: RealRestaurant
 
 stages: 
 - stage: build
