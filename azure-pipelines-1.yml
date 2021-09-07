@@ -1,13 +1,14 @@
 
 
 trigger:
-- master
-
+  branches:
+    include:
+    - master
 pool:
   vmImage: 'windows-latest'
 
 variables: 
-  solution: 'RealRestaurant\RealRestaurant.sln'
+  solution: 'RealRestaurant'
 
 stages: 
 - stage: build
