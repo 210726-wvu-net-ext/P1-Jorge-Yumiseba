@@ -4,7 +4,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'unbuntu-latest'
 
 variables: 
   solution: RealRestaurant
