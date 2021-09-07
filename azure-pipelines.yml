@@ -17,7 +17,7 @@ pool:
   vmImage: windows-latest
 
 variables: 
-  Solution: '**/*.sln'
+  Solution: '**\*.sln'
 
 stages: 
 - stage: build
