@@ -19,7 +19,7 @@ steps:
 - task: SonarCloudPrepare@1
   displayName: 'Prepare analysis configuration'
   inputs:
-    SonarCloud: 'P1 Scanner'
+    SonarCloud: 'jyalarcon1997'
     organization: '210726-wvu-net-ext'
     scannerMode: 'MSBuild'
     projectKey: '210726-wvu-net-ext_P1-Jorge-Yumiseba'
