@@ -55,11 +55,7 @@ namespace WebRestaurant.Controllers
         [HttpPost] //form submission
         public IActionResult CreateUser(Customer customer)
         {
-            //ASP.NET "model binding"
-            //-fill in action method parameters with data from the request
-            // (ULR  path, URL query string, form data, etc - autimatically
-            //based on compatible data type and name
-            // _repo = AddUser(customer);
+      
 
             _repo.AddUser(customer);
 

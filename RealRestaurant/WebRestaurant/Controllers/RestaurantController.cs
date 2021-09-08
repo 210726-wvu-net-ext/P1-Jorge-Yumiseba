@@ -46,15 +46,15 @@ namespace WebRestaurant.Controllers
         public IActionResult Register(UserInformation customer)
         {
 
-            var x = _repo.AddUserInfo(customer);
-
-
+  
             var y = _repo.GetUsers().Find(t => t.Username == customer.Username);
 
 
-            if (x.Username != y.Username)
+            if (y == null)
             {
+                    _repo.AddUserInfo(customer);
                 return RedirectToAction(nameof(DetailsRegistration));
+                
             }
             
             else 

@@ -33,6 +33,13 @@ namespace WebRestaurant.Controllers
             return View();
         }
 
+        public IActionResult SuggestionCreate(Domain.Suggestion x)
+        {
+            _repo.AddSuggestion(x);
+
+            return RedirectToAction("Index");
+        }
+
 
 
         [HttpGet("denied")]
