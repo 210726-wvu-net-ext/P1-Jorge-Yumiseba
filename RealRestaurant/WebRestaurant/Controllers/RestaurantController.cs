@@ -25,6 +25,7 @@ namespace WebRestaurant.Controllers
             _repo = repo;
         }
 
+        //Make even more css
         public IActionResult Index()
         {
             var x = _repo.GetRestaurants();
@@ -34,6 +35,7 @@ namespace WebRestaurant.Controllers
             return View(x);
         }
 
+        //Great 
         [HttpGet]
         public IActionResult Register()
         {
@@ -66,6 +68,7 @@ namespace WebRestaurant.Controllers
         }
 
 
+        //I totally did not need that many views, temps were enough
         public IActionResult DetailsCreate(string name)
         {
 
@@ -112,13 +115,13 @@ namespace WebRestaurant.Controllers
 
         }
 
-
+        // Connecting Details with restaurant table
         public IActionResult Details(int id)
         {
 
-            Restaurant res = _repo.GetRestaurants().FirstOrDefault(x => x.Id == id);
+            Restaurant res = _repo.GetRestaurants().FirstOrDefault(x => x.Id == id); // shows and select restaurant
 
-            res.Reviewseconds = _repo.GetReviews().FindAll(x => x.RestaurantId == id);
+            res.Reviewseconds = _repo.GetReviews().FindAll(x => x.RestaurantId == id); // finds all the reviews with the restaurat selected
 
             return View(res);
 

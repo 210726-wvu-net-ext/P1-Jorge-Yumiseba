@@ -32,7 +32,8 @@ namespace WebRestaurant.Controllers
  
             return View();
         }
-
+        
+        //Suggestion in the index page
         public IActionResult SuggestionCreate(Domain.Suggestion x)
         {
             _repo.AddSuggestion(x);
@@ -41,7 +42,7 @@ namespace WebRestaurant.Controllers
         }
 
 
-
+        // Redirect to when you can't sign in
         [HttpGet("denied")]
         public IActionResult Denied()
         {
@@ -50,6 +51,8 @@ namespace WebRestaurant.Controllers
 
         }
 
+        //Does nothing but I did not want to delete it D:
+
       [Authorize]
         public IActionResult Security()
         {
@@ -57,6 +60,7 @@ namespace WebRestaurant.Controllers
         }
 
 
+        //Login (claims)
         [HttpGet("login")]
         public IActionResult Login(string returnUrl)
         {
@@ -93,6 +97,7 @@ namespace WebRestaurant.Controllers
             return View("login");
         }
 
+        //Works =D
         [Authorize]
         public async Task<IActionResult> Logout()
         {
